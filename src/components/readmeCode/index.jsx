@@ -24,12 +24,22 @@ function ReadmeCode() {
                     case "codeBox":
                         return `\`\`\`${el.codeType}\n${el.text}\n\`\`\``;
                     case "table":
-                        if (!Array.isArray(el.data)) {
+                        if (!Array.isArray(el.data) || el.data.length === 0) {
                             return "⚠️ Table data is missing or invalid";
                         }
-                        return el.data
-                            .map((row) => (Array.isArray(row) ? `| ${row.join(" | ")} |` : "⚠️ Invalid row data"))
-                            .join("\n");
+                    
+                        const columnCount = Math.max(...el.data.map(row => row.length));
+                    
+                        const normalizeRow = (row) => 
+                            `| ${row.map(cell => cell || "").join(" | ")} |`;
+                    
+                        const header = normalizeRow(el.data[0]);
+                    
+                        const separator = `| ${Array(columnCount).fill("---").join(" | ")} |`;
+                    
+                        const rows = el.data.slice(1).map(normalizeRow);
+                    
+                        return [header, separator, ...rows].join("\n");
                     case "list":
                         return el.items.map((item) => `- ${item.replace(/(.{30})/g, "$1\u200B")}`).join("\n");
                     default:
