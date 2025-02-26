@@ -1,0 +1,120 @@
+{
+    "extensions":{
+        "JS": {
+            "name": "JavaScript",
+            "extension": "js"
+        },
+        "TS": {
+            "name": "TypeScript",
+            "extension": "ts"
+        },
+        "JSX": {
+            "name": "JavaScript React",
+            "extension": "jsx"
+        },
+        "HTML": {
+            "name": "HTML",
+            "extension": "html"
+        },
+        "CC": {
+            "name": "CSS",
+            "extension": "css"
+        },
+        "SCSS": {
+            "name": "SCSS",
+            "extension": "scss"
+        },
+        "JSON": {
+            "name": "JSON",
+            "extension": "json"
+        },
+        "YAML": {
+            "name": "YAML",
+            "extension": "yml"
+        },
+        "XML": {
+            "name": "XML",
+            "extension": "xml"
+        },
+        "SQL": {
+            "name": "SQL",
+            "extension": "sql"
+        },
+        "Shell-Script": {
+            "name": "Shell Script",
+            "extension": "sh"
+        },
+        "Python": {
+            "name": "Python",
+            "extension": "py"
+        },
+        "Java": {
+            "name": "Java",
+            "extension": "java"
+        },
+        "Kotlin": {
+            "name": "Kotlin",
+            "extension": "kt"
+        },
+        "Swift": {
+            "name": "Swift",
+            "extension": "swift"
+        },
+        "C": {
+            "name": "C",
+            "extension": "c"
+        },
+        "C++": {
+            "name": "C++",
+            "extension": "c++"
+        },
+        "C#": {
+            "name": "C#",
+            "extension": "cs"
+        },
+        "PHP": {
+            "name": "PHP",
+            "extension": "php"
+        },
+        "Ruby": {
+            "name": "Ruby",
+            "extension": "rb"
+        },
+        "Perl": {
+            "name": "Perl",
+            "extension": "pl"
+        },
+        "Rust": {
+            "name": "Rust",
+            "extension": "rs"
+        },
+        "Go": {
+            "name": "Go",
+            "extension": "go"
+        },
+        "Dart": {
+            "name": "Dart",
+            "extension": "dart"
+        },
+        "R": {
+            "name": "R",
+            "extension": "r"
+        },
+        "PowerShell": {
+            "name": "PowerShell",
+            "extension": "powershell"
+        },
+        "GraphQL": {
+            "name": "GraphQL",
+            "extension": "graphql"
+        },
+        "Dockerfile": {
+            "name": "Dockerfile",
+            "extension": "dockerfile"
+        },
+        "TOML": {
+            "name": "TOML",
+            "extension": "toml"
+        }
+    }
+}
