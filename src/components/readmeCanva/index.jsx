@@ -44,8 +44,8 @@ function ReadmeCanva() {
             text: '',
             bold: false,
             color: '#000000',
-            ...(parsedData.type === 'table' ? { data: [['']] } : {}),
-            ...(parsedData.type === 'list' ? { items: [''] } : {})
+            data: parsedData.type === 'table' ? (parsedData.data || [['']]) : undefined,
+            items: parsedData.type === 'list' ? (parsedData.items || ['']) : undefined
           }]);
         }
     };
