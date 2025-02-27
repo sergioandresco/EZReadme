@@ -1,16 +1,16 @@
 # EZReadme
 
-![EZReadme-logo](public/EZReadme.jpg)
+![Insert the name of your image](Insert image URL here)
 
-## Make Readme files for your projects of an easy way
+## Make Readme files for your projects of an easy way
 
 EZReadme is a web page for helps to developers to create the Readme file for your repositories of the most easy, interactive and fun possible way for make the life more easy.
 
-## Description
+## Description
 
 This web project is a project think by a Frontend developer with some backend friends that not know make a Readme file for your code respositorys, so, for this reason i thought the some way for those people that not know create an Readme file but that they needs for your projects.
 
-## Avaible elements
+## Avaible elements
 
 | # | Name | Description |
 | --- | --- | --- |
@@ -35,11 +35,11 @@ This web project is a project think by a Frontend developer with some backend fr
 > [!IMPORTANT]
 > For to use the elements it's can drag and drop or only with a click on the element.
 
-## Code box live
+## Code box live
 
 Additionaly the web page has a component where it's transformed your canvas design in Markdown code for that can copy this code and insert on your README.md.
 
-## Technologies
+## Technologies
 
 | # | Name |
 | --- | --- |
@@ -54,3 +54,5 @@ Additionaly the web page has a component where it's transformed your canvas desi
 
 > [!NOTE]
 > This Readme.md was created with this application web.
+
+# testeo
