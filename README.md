@@ -12,7 +12,7 @@ This web project is a project think by a Frontend developer with some backend fr
 
 # WEB PAGE
 
-[Link](https://ezreadme-gamma.vercel.app/)
+[EZReadme](https://ezreadme-gamma.vercel.app/)
 
 ## Avaible elements
 
