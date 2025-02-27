@@ -74,6 +74,8 @@ function ReadmeCode() {
                     height: "100%",
                     backgroundColor: '#FFFFFF',
                     borderRadius: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
                 id="readme-code-live"
             >
@@ -149,7 +151,8 @@ function ReadmeCode() {
                     borderRadius: '8px',
                     padding: 2,
                     wordWrap: 'break-word',
-                    overflowWrap: 'break-word'
+                    overflowWrap: 'break-word',
+                    overflowY: 'auto',
                 }}
                 >
                     <pre
