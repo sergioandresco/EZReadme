@@ -12,9 +12,9 @@ function ReadmeCode() {
             .map((el) => {
                 switch (el.type) {
                     case "title":
-                        return `#\u00A0${el.text}`;
+                        return `# ${el.text}`;
                     case "subtitle":
-                        return `##\u00A0${el.text}`;
+                        return `## ${el.text}`;
                     case "paragraph":
                         return el.text;
                     case "image":
