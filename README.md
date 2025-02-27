@@ -54,5 +54,3 @@ Additionaly the web page has a component where it's transformed your canvas desi
 
 > [!NOTE]
 > This Readme.md was created with this application web.
-
-# testeo
