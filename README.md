@@ -1,6 +1,6 @@
 # EZReadme
 
-![Insert the name of your image](Insert image URL here)
+![EZReadme-logo](public/EZReadme.jpg)
 
 ## Make Readme files for your projects of an easy way
 
