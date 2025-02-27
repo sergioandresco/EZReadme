@@ -1,4 +1,4 @@
-# EZReadme
+# EZReadme
 
 ![EZReadme-logo](public/EZReadme.jpg)
 
