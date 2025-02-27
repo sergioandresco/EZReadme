@@ -63,63 +63,64 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
             );
             
         case 'markdown':
-          return (
-            <MarkdownCategories
-              type={element.markdownType}
-              text={element.text}
-              onTextChange={(newText) => handleTextChange(index, newText)}
-              color={element.color}
-              title={element.title}
-              iconType={element.iconType}
-            />
-          );
+			return (
+				<MarkdownCategories
+					type={element.markdownType}
+					text={element.text}
+					onTextChange={(newText) => handleTextChange(index, newText)}
+					color={element.color}
+					title={element.title}
+					iconType={element.iconType}
+					className="markdown-elementtttt"
+				/>
+			);
   
         case 'codeBox':
-          return (
-            <TextField
-              multiline
-              minRows={4}
-              value={element.text}
-              onChange={(e) => handleTextChange(index, e.target.value)}
-              placeholder="Insert your code here..."
-              fullWidth
-              variant="outlined"
-              sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
-            />
-          );
+			return (
+				<TextField
+					multiline
+					minRows={4}
+					value={element.text}
+					onChange={(e) => handleTextChange(index, e.target.value)}
+					placeholder="Insert your code here..."
+					fullWidth
+					variant="outlined"
+					sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
+				/>
+			);
   
         case 'table':
-        return (
-            <TableContainer component={Paper}>
-            <Table>
-                <TableBody>
-                {(element.data || [[]]).map((row, rowIndex) => (
-                    <TableRow key={rowIndex}>
-                    {row.map((cell, colIndex) => (
-                        <TableCell key={colIndex}>
-                        <TextField
-                            value={cell}
-                            onChange={(e) => onUpdateCell(index, rowIndex, colIndex, e.target.value)}
-                            inputProps={{
-                            style: {
-                                fontFamily: 'GT Planar',
-                                letterSpacing: '-.3px'
-                            }
-                            }}
-                        />
-                        </TableCell>
-                    ))}
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-            </TableContainer>
-        );
+			return (
+				<TableContainer component={Paper}>
+				<Table>
+					<TableBody>
+					{(element.data || [[]]).map((row, rowIndex) => (
+						<TableRow key={rowIndex}>
+						{row.map((cell, colIndex) => (
+							<TableCell key={colIndex}>
+							<TextField
+								value={cell}
+								onChange={(e) => onUpdateCell(index, rowIndex, colIndex, e.target.value)}
+								inputProps={{
+								style: {
+									fontFamily: 'GT Planar',
+									letterSpacing: '-.3px'
+								}
+								}}
+							/>
+							</TableCell>
+						))}
+						</TableRow>
+					))}
+					</TableBody>
+				</Table>
+				</TableContainer>
+			);
 
         case 'list':
             return (
                 <List>
-                {element.items.map((item, itemIndex) => (
+                {(element.items || []).map((item, itemIndex) => (
                     <ListItem key={itemIndex}>
                         <TextField
                             value={item}
@@ -140,7 +141,7 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
             );
   
         default:
-          return <p>Unknown element type</p>;
+          	return <p>Unknown element type</p>;
       }
     };
 
@@ -163,23 +164,23 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
             return (
                 <label htmlFor={`file-input-${index}`}>
                     <input
-                    id={`file-input-${index}`}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                        const objectUrl = URL.createObjectURL(file);
-                        handleTextChange(index, objectUrl);
-                        }
-                    }}
-                    style={{ display: 'none' }}
+						id={`file-input-${index}`}
+						type="file"
+						accept="image/*"
+						onChange={(e) => {
+							const file = e.target.files?.[0];
+							if (file) {
+							const objectUrl = URL.createObjectURL(file);
+							handleTextChange(index, objectUrl);
+							}
+						}}
+						style={{ display: 'none' }}
                     />
                     <Button 
-                    variant="contained" 
-                    component="span"
-                    size="small"
-                    sx={{ mb: 1 }}
+						variant="contained" 
+						component="span"
+						size="small"
+						sx={{ mb: 1 }}
                     >
                     Upload Image
                     </Button>

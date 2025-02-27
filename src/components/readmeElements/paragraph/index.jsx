@@ -3,16 +3,31 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { toast } from 'sonner';
+import { useReadme } from '../../../context/saveElements';
 
 function ParagraphComponent() {
+
+    const { setElements } = useReadme();
+    
     const cards = [
-      {
-        id: 1,
-        title: 'Paragraph',
-        description: 'With this component you can insert a paragraph in your Readme file.',
-        type: 'paragraph',
-      },
+        {
+            id: 1,
+            title: 'Paragraph',
+            description: 'With this component you can insert a paragraph in your Readme file.',
+            type: 'paragraph',
+        },
     ];
+
+    const handleClick = (card) => {
+        toast.success('Element successfully added');
+        setElements(prev => [...prev, {
+            ...card,
+            text: '',
+            bold: false,
+            color: '#000000'
+        }]);
+    };
   
     return (
         <Box
@@ -50,6 +65,7 @@ function ParagraphComponent() {
                     onDragStart={(e) =>
                     e.dataTransfer.setData('application/json', JSON.stringify(card))
                     }
+                    onClick={() => handleClick(card)}
                 >
                     <CardActionArea>
                         <CardContent>

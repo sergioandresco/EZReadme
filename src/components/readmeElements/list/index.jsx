@@ -3,8 +3,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { toast } from 'sonner';
+import { useReadme } from '../../../context/saveElements';
 
 function ListComponent() {
+
+    const { setElements } = useReadme();
 
     const cards = [
         {
@@ -14,6 +18,17 @@ function ListComponent() {
           type: 'list',
         }
     ];
+
+    const handleClick = (card) => {
+        toast.success('Element successfully added');
+        setElements(prev => [...prev, {
+            ...card,
+            text: '',
+            bold: false,
+            color: '#000000',
+            items: card.type === 'list' ? [''] : undefined
+        }]);
+    };
       
     return (
         <Box
@@ -51,6 +66,7 @@ function ListComponent() {
                     onDragStart={(e) =>
                     e.dataTransfer.setData('application/json', JSON.stringify(card))
                     }
+                    onClick={() => handleClick(card)}
                 >
                     <CardActionArea>
                         <CardContent>

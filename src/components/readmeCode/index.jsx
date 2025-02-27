@@ -12,21 +12,36 @@ function ReadmeCode() {
             .map((el) => {
                 switch (el.type) {
                     case "title":
-                        return `# ${el.text}`;
+                        return `#\u00A0${el.text}`;
                     case "subtitle":
-                        return `## ${el.text}`;
+                        return `##\u00A0${el.text}`;
                     case "paragraph":
                         return el.text;
                     case "image":
                         return `![Insert the name of your image](Insert image URL here)`;
                     case "markdown":
-                        return `> [!${el.title}]\n> ${el.text}`;
+                        return `> [!${el.title}]\n>\u00A0${el.text}`;
                     case "codeBox":
                         return `\`\`\`${el.codeType}\n${el.text}\n\`\`\``;
                     case "table":
-                        return el.data.map((row) => `| ${row.join(" | ")} |`).join("\n");
+                        if (!Array.isArray(el.data) || el.data.length === 0) {
+                            return "⚠️ Table data is missing or invalid";
+                        }
+                    
+                        const columnCount = Math.max(...el.data.map(row => row.length));
+                    
+                        const normalizeRow = (row) => 
+                            `| ${row.map(cell => cell || "").join(" | ")} |`;
+                    
+                        const header = normalizeRow(el.data[0]);
+                    
+                        const separator = `| ${Array(columnCount).fill("---").join(" | ")} |`;
+                    
+                        const rows = el.data.slice(1).map(normalizeRow);
+                    
+                        return [header, separator, ...rows].join("\n");
                     case "list":
-                        return el.items.map((item) => `- ${item}`).join("\n");
+                        return el.items.map((item) => `- ${item.replace(/(.{30})/g, "$1\u200B")}`).join("\n");
                     default:
                         return "";
                 }
@@ -59,6 +74,8 @@ function ReadmeCode() {
                     height: "100%",
                     backgroundColor: '#FFFFFF',
                     borderRadius: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
                 id="readme-code-live"
             >
@@ -133,9 +150,18 @@ function ReadmeCode() {
                     overflowY: 'auto',
                     borderRadius: '8px',
                     padding: 2,
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    overflowY: 'auto',
                 }}
                 >
-                    <pre>{generateMarkdown()}</pre>
+                    <pre
+                        style={{ 
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word'
+                        }}
+                    >{generateMarkdown()}</pre>
                 </Box>
             </Paper>
         </Grid>
