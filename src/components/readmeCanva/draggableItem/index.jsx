@@ -10,7 +10,7 @@ import { MdFormatColorFill, MdDelete } from "react-icons/md";
 import { MdDragIndicator } from "react-icons/md";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import MarkdownCategories from '@/components/readmeElements/markdownBlock/function';
+import AlertCategories from '@/components/readmeElements/alert/function';
 
 function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
 
@@ -62,18 +62,18 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
                 </Box>
             );
             
-        case 'markdown':
-			return (
-				<MarkdownCategories
-					type={element.markdownType}
-					text={element.text}
-					onTextChange={(newText) => handleTextChange(index, newText)}
-					color={element.color}
-					title={element.title}
-					iconType={element.iconType}
-					className="markdown-elementtttt"
-				/>
-			);
+        case 'alert':
+          return (
+            <AlertCategories
+              type={element.markdownType}
+              text={element.text}
+              onTextChange={(newText) => handleTextChange(index, newText)}
+              color={element.color}
+              title={element.title}
+              iconType={element.iconType}
+              className="markdown-elementtttt"
+            />
+          );
   
         case 'codeBox':
 			return (
@@ -293,27 +293,6 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
                     gap: 1
                 }}
             >
-                <IconButton 
-                    size="small"
-                    sx={{ position: 'relative' }}
-                >
-                    <input
-                        type="color"
-                        value={element.color}
-                        onChange={(e) => changeColor(index, e.target.value)}
-                        style={{
-                            cursor: 'pointer',
-                            height: '24px',
-                            width: '24px',
-                            border: 'none',
-                            background: 'none',
-                            position: 'absolute',
-                            opacity: 0
-                        }}
-                    />
-                    <MdFormatColorFill />
-                </IconButton>
-
                 <IconButton 
                     onClick={() => onRemove(index)}
                     size="small"

@@ -4,7 +4,7 @@ import TitleComponent from "@/components/readmeElements/title";
 import SubTitleComponent from "@/components/readmeElements/subtitle";
 import ParagraphComponent from "@/components/readmeElements/paragraph";
 import UploadImage from "@/components/readmeElements/uploadImage";
-import MarkDownBlock from "@/components/readmeElements/markdownBlock";
+import AlertBlock from "@/components/readmeElements/alert";
 import CodeBox from "@/components/readmeElements/codeBox";
 import TableComponent from "@/components/readmeElements/table";
 import ListComponent from "@/components/readmeElements/list";
@@ -48,7 +48,7 @@ function ContainerElements() {
                     <SubTitleComponent />
                     <ParagraphComponent />
                     <UploadImage />
-                    <MarkDownBlock
+                    <AlertBlock
                         markdownType={markdownType} 
                         setMarkdownType={setMarkdownType} 
                     />

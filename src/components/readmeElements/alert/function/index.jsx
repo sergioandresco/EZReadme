@@ -6,7 +6,7 @@ import { BiMessageError } from "react-icons/bi";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 
-const MarkdownCategories = ({ type, text, onTextChange, color, title, iconType }) => {
+const AlertCategories = ({ type, text, onTextChange, color, title, iconType }) => {
 
     const getIcon = (type) => {
         switch (type) {
@@ -71,4 +71,4 @@ const MarkdownCategories = ({ type, text, onTextChange, color, title, iconType }
     );
 };
 
-export default MarkdownCategories;
+export default AlertCategories;
