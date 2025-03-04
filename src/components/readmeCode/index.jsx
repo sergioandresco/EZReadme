@@ -19,7 +19,7 @@ function ReadmeCode() {
                         return el.text;
                     case "image":
                         return `![Insert the name of your image](Insert image URL here)`;
-                    case "markdown":
+                    case "alert":
                         return `> [!${el.title}]\n>\u00A0${el.text}`;
                     case "codeBox":
                         return `\`\`\`${el.codeType}\n${el.text}\n\`\`\``;
