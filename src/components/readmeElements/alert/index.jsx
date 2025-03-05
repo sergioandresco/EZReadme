@@ -10,10 +10,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { toast } from 'sonner';
 import { useReadme } from '../../../context/saveElements';
+import { useAlert } from '../../../context/alertContext';
 
 function AlertBlock({ markdownType, setMarkdownType }) {
 
 	const { setElements } = useReadme();
+	const { alertType, setAlertType } = useAlert();
 
     const markdownTypes = {
 		NOTE: { title: "NOTE", color: "#4F8EF7", iconType: "info" },
@@ -24,16 +26,16 @@ function AlertBlock({ markdownType, setMarkdownType }) {
     };
     
     const handleMarkdownTypeChange = (event) => {
-      	setMarkdownType(event.target.value);
+		setAlertType(event.target.value);
     };
 
     const handleDragStart = (e, card) => {
 		const dragData = {
 			...card,
-			markdownType,
-			color: markdownTypes[markdownType].color,
-			title: markdownTypes[markdownType].title,
-			iconType: markdownTypes[markdownType].iconType
+			markdownType: alertType,
+			color: markdownTypes[alertType].color,
+			title: markdownTypes[alertType].title,
+			iconType: markdownTypes[alertType].iconType
 		};
 		e.dataTransfer.setData('application/json', JSON.stringify(dragData));
     };
@@ -47,24 +49,29 @@ function AlertBlock({ markdownType, setMarkdownType }) {
 		},
     ];
 
-	const handleClick = (card) => {
-        
+	const handleClick = (card) => {  
         toast.success('Element successfully added');
         setElements(prev => [...prev, {
             ...card,
             text: '',
             bold: false,
             color: '#000000',
-            markdownType,
-			color: markdownTypes[markdownType].color,
-			title: markdownTypes[markdownType].title,
-			iconType: markdownTypes[markdownType].iconType
+            markdownType: alertType,
+			color: markdownTypes[alertType].color,
+			title: markdownTypes[alertType].title,
+			iconType: markdownTypes[alertType].iconType
         }]);
     };
   
     return (
 		<Box className="card-container"
-			sx={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))', gap: 2, justifyItems: 'center' }}
+			sx={{ 
+				width: '100%',
+				display: 'grid', 
+				gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))', 
+				gap: 2, 
+				justifyItems: 'center' 
+			}}
 		>
 			{cards.map((card) => (
 			<Card
@@ -98,7 +105,7 @@ function AlertBlock({ markdownType, setMarkdownType }) {
 						<InputLabel id="markdown-type-label" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }} >Alert type</InputLabel>
 						<Select
 							labelId="markdown-type-label"
-							value={markdownType || "NOTE"}
+							value={alertType || "NOTE"}
 							onChange={handleMarkdownTypeChange}
 							MenuProps={{
 								PaperProps: {

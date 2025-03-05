@@ -232,6 +232,7 @@ function ReadmeCanva() {
                                 element={el}
                                 index={index}
                                 handleTextChange={handleTextChange}
+                                setElements={setElements}
                                 onRemove={removeElement}
                                 onLink={insertLink}
                                 onAddRow={addRow}

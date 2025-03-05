@@ -17,7 +17,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import AlertCategories from '@/components/readmeElements/alert/function';
 
-function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
+function DraggableItem ({ element, index, handleTextChange, setElements, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: index,
@@ -45,7 +45,15 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
 			iconType: markdownTypes[newType].iconType,
 		};
 
-		handleTextChange(index, { ...element, ...updatedElement });
+		setElements(prevElements => {
+			const newElements = prevElements.map((el, i) =>
+				i === index ? { ...el, ...updatedElement } : el
+			);
+	
+			sessionStorage.setItem("readmeElements", JSON.stringify(newElements));
+	
+			return newElements;
+		});
 	}
   
     const getElementByType = () => {
@@ -97,7 +105,7 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
 				<AlertCategories
 					type={element.markdownType}
 					text={element.text}
-					onTextChange={(newText) => handleTextChange(index, { ...element, text: newText })}
+					onTextChange={(newText) => handleTextChange(index, newText)}
 					color={element.color}
 					title={element.title}
 					iconType={element.iconType}
