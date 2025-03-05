@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Paper, Box, TextField, IconButton, Button } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
@@ -6,17 +7,54 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { MdFormatColorFill, MdDelete } from "react-icons/md";
 import { MdDragIndicator } from "react-icons/md";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import AlertCategories from '@/components/readmeElements/alert/function';
 
-function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
+function DraggableItem ({ element, index, handleTextChange, setElements, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: index,
     });
+
+	const [markdownType, setMarkdownType] = useState('NOTE');
+
+	const markdownTypes = {
+		NOTE: { title: "NOTE", color: "#4F8EF7", iconType: "info" },
+		TIP: { title: "TIP", color: "#2DCE89", iconType: "lightbulb" },
+		IMPORTANT: { title: "IMPORTANT", color: "#845EC2", iconType: "error" },
+		WARNING: { title: "WARNING", color: "#FFA500", iconType: "warning" },
+		CAUTION: { title: "CAUTION", color: "#E63946", iconType: "caution" }
+    };
+
+	const handleMarkdownTypeChange = (event) => {
+		const newType = event.target.value;
+    	setMarkdownType(newType);
+
+		const updatedElement = {
+			...element,
+			markdownType: newType,
+			title: markdownTypes[newType].title,
+			color: markdownTypes[newType].color,
+			iconType: markdownTypes[newType].iconType,
+		};
+
+		setElements(prevElements => {
+			const newElements = prevElements.map((el, i) =>
+				i === index ? { ...el, ...updatedElement } : el
+			);
+	
+			sessionStorage.setItem("readmeElements", JSON.stringify(newElements));
+	
+			return newElements;
+		});
+	}
   
     const getElementByType = () => {
       switch (element.type) {
@@ -63,17 +101,17 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
             );
             
         case 'alert':
-          return (
-            <AlertCategories
-              type={element.markdownType}
-              text={element.text}
-              onTextChange={(newText) => handleTextChange(index, newText)}
-              color={element.color}
-              title={element.title}
-              iconType={element.iconType}
-              className="markdown-elementtttt"
-            />
-          );
+			return (
+				<AlertCategories
+					type={element.markdownType}
+					text={element.text}
+					onTextChange={(newText) => handleTextChange(index, newText)}
+					color={element.color}
+					title={element.title}
+					iconType={element.iconType}
+					className="markdown-elementtttt"
+				/>
+			);
   
         case 'codeBox':
 			return (
@@ -147,95 +185,122 @@ function DraggableItem ({ element, index, handleTextChange, onRemove, onLink, on
 
     const getActionButtons = () => {
         switch (element.type) {
-          case 'title':
-          case 'subtitle':
-          case 'paragraph':
-            return (
-              <Button 
-                onClick={() => onLink(index)}
-                size="small"
-                sx={{ mb: 1 }}
-              >
-                Insert Link
-              </Button>
-            );
-  
-          case 'image':
-            return (
-                <label htmlFor={`file-input-${index}`}>
-                    <input
-						id={`file-input-${index}`}
-						type="file"
-						accept="image/*"
-						onChange={(e) => {
-							const file = e.target.files?.[0];
-							if (file) {
-							const objectUrl = URL.createObjectURL(file);
-							handleTextChange(index, objectUrl);
-							}
-						}}
-						style={{ display: 'none' }}
-                    />
-                    <Button 
-						variant="contained" 
-						component="span"
+			case 'title':
+			case 'subtitle':
+			case 'paragraph':
+				return (
+					<Button 
+						onClick={() => onLink(index)}
 						size="small"
 						sx={{ mb: 1 }}
-                    >
-                    Upload Image
-                    </Button>
-                </label>
-            );
-  
-          case 'table':
-            return (
-              <Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Button 
-                  onClick={() => onAddRow(index)} 
-                  size="small"
-                  sx={{ fontFamily: 'Acorn' }}
-                >
-                  ➕ Add Row
-                </Button>
-                <Button 
-                  onClick={() => onAddColumn(index)} 
-                  size="small"
-                  sx={{ fontFamily: 'Acorn' }}
-                >
-                  ➕ Add Column
-                </Button>
-                <Button 
-                  onClick={() => onDeleteRow(index)} 
-                  size="small"
-                  sx={{ fontFamily: 'Acorn' }}
-                >
-                  - Delete Row
-                </Button>
-                <Button 
-                  onClick={() => onDeleteColumn(index)} 
-                  size="small"
-                  sx={{ fontFamily: 'Acorn' }}
-                >
-                  - Delete Column
-                </Button>
-              </Box>
-            );
-  
-          case 'list':
-            return (
-              <Box sx={{ mb: 1 }}>
-                <Button 
-                  onClick={() => onAddListItem(index)}
-                  size="small"
-                  sx={{ fontFamily: 'Acorn' }}
-                >
-                  ➕ Add Item
-                </Button>
-              </Box>
-            );
-  
-          default:
-            return null;
+					>
+						Insert Link
+					</Button>
+				);
+	
+			case 'image':
+				return (
+					<label htmlFor={`file-input-${index}`}>
+						<input
+							id={`file-input-${index}`}
+							type="file"
+							accept="image/*"
+							onChange={(e) => {
+								const file = e.target.files?.[0];
+								if (file) {
+								const objectUrl = URL.createObjectURL(file);
+								handleTextChange(index, objectUrl);
+								}
+							}}
+							style={{ display: 'none' }}
+						/>
+						<Button 
+							variant="contained" 
+							component="span"
+							size="small"
+							sx={{ mb: 1 }}
+						>
+						Upload Image
+						</Button>
+					</label>
+				);
+
+			case 'alert':
+				return (
+					<Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+						<FormControl fullWidth style={{ marginTop: '18px' }}>
+							<InputLabel id="markdown-type-label" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }} >Alert type</InputLabel>
+							<Select
+								labelId="markdown-type-label"
+								value={markdownType}
+								onChange={handleMarkdownTypeChange}
+								MenuProps={{
+									PaperProps: {
+										sx: {
+											fontFamily: "GT Planar",
+										},
+									},
+								}}
+							>
+								{Object.keys(markdownTypes).map((type) => (
+									<MenuItem key={type} value={type} sx={{ fontFamily: "GT Planar !important", letterSpacing: "-.3px" }}>
+										{type}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>
+				);
+	
+			case 'table':
+				return (
+					<Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+						<Button 
+						onClick={() => onAddRow(index)} 
+						size="small"
+						sx={{ fontFamily: 'Acorn' }}
+						>
+						➕ Add Row
+						</Button>
+						<Button 
+						onClick={() => onAddColumn(index)} 
+						size="small"
+						sx={{ fontFamily: 'Acorn' }}
+						>
+						➕ Add Column
+						</Button>
+						<Button 
+						onClick={() => onDeleteRow(index)} 
+						size="small"
+						sx={{ fontFamily: 'Acorn' }}
+						>
+						- Delete Row
+						</Button>
+						<Button 
+						onClick={() => onDeleteColumn(index)} 
+						size="small"
+						sx={{ fontFamily: 'Acorn' }}
+						>
+						- Delete Column
+						</Button>
+					</Box>
+				);
+	
+			case 'list':
+				return (
+					<Box sx={{ mb: 1 }}>
+						<Button 
+						onClick={() => onAddListItem(index)}
+						size="small"
+						sx={{ fontFamily: 'Acorn' }}
+						>
+						➕ Add Item
+						</Button>
+					</Box>
+				);
+	
+			default:
+				return null;
         }
     };
   
