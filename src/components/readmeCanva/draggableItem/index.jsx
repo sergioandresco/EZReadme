@@ -16,6 +16,7 @@ import { MdDragIndicator } from "react-icons/md";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import AlertCategories from '@/components/readmeElements/alert/function';
+import data from '../../../data/codeExtensions/data.json'
 
 function DraggableItem ({ element, index, handleTextChange, setElements, onRemove, onLink, onAddRow, onDeleteRow, onAddColumn, onDeleteColumn, onAddListItem, onRemoveListItem, onUpdateCell, onUpdateListItem }) {
 
@@ -24,6 +25,7 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
     });
 
 	const [markdownType, setMarkdownType] = useState('NOTE');
+	const [codeType, setCodeType] = useState('js');
 
 	const markdownTypes = {
 		NOTE: { title: "NOTE", color: "#4F8EF7", iconType: "info" },
@@ -33,7 +35,13 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
 		CAUTION: { title: "CAUTION", color: "#E63946", iconType: "caution" }
     };
 
-	const handleMarkdownTypeChange = (event) => {
+	const extensionFiles = Object.values(data.extensions).map((item, index) => (
+        <MenuItem key={index} value={item.extension} sx={{ fontFamily: "GT Planar !important", letterSpacing: "-.3px" }}>
+            {item.name} ({item.extension})
+        </MenuItem>
+    ));
+
+	const handleAlertTypeChange = (event) => {
 		const newType = event.target.value;
     	setMarkdownType(newType);
 
@@ -55,132 +63,152 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
 			return newElements;
 		});
 	}
+
+	const handleCodeTypeChange = (event) => {
+		const newCodeLanguage = event.target.value;
+		setCodeType(newCodeLanguage);
+
+		const updatedElement = {
+			...element,
+			codeType: newCodeLanguage,
+		};
+
+		setElements(prevElements => {
+			const newElements = prevElements.map((el, i) =>
+				i === index ? { ...el, ...updatedElement } : el
+			);
+	
+			sessionStorage.setItem("readmeElements", JSON.stringify(newElements));
+	
+			return newElements;
+		});
+	}
   
     const getElementByType = () => {
-      switch (element.type) {
-        case 'title':
-        case 'subtitle':
-        case 'paragraph':
-            return (
-                <TextField
-                    value={element.text}
-                    onChange={(e) => handleTextChange(index, e.target.value)}
-                    placeholder={`Enter ${element.type}`}
-                    fullWidth
-                    variant="outlined"
-                    multiline={element.type === 'paragraph'}
-                    sx={{
-                        marginBottom: 1,
-                        fontWeight: element.bold ? 'bold' : 'normal',
-                        color: element.color,
-                        fontSize: element.type === 'title' ? '2em' : '1.5em'
-                    }}
-                    inputProps={{
-                        style: {
-                            fontWeight: element.bold ? 'bold' : 'normal',
-                            color: element.color,
-                            fontSize: element.type === 'title' ? undefined : '0.9rem',
-                            fontFamily: 'GT Planar',
-                            letterSpacing: '-.3px'
-                        }
-                    }}
-                />
-            );
-  
-        case 'image':
-            return (
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                {element.text && (
-                    <img
-                    src={element.text}
-                    alt="Uploaded Preview"
-                    style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }}
-                    />
-                )}
-                </Box>
-            );
-            
-        case 'alert':
-			return (
-				<AlertCategories
-					type={element.markdownType}
-					text={element.text}
-					onTextChange={(newText) => handleTextChange(index, newText)}
-					color={element.color}
-					title={element.title}
-					iconType={element.iconType}
-					className="markdown-elementtttt"
-				/>
-			);
-  
-        case 'codeBox':
-			return (
-				<TextField
-					multiline
-					minRows={4}
-					value={element.text}
-					onChange={(e) => handleTextChange(index, e.target.value)}
-					placeholder="Insert your code here..."
-					fullWidth
-					variant="outlined"
-					sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
-				/>
-			);
-  
-        case 'table':
-			return (
-				<TableContainer component={Paper}>
-				<Table>
-					<TableBody>
-					{(element.data || [[]]).map((row, rowIndex) => (
-						<TableRow key={rowIndex}>
-						{row.map((cell, colIndex) => (
-							<TableCell key={colIndex}>
+		switch (element.type) {
+			case 'title':
+			case 'subtitle':
+			case 'paragraph':
+				return (
+					<TextField
+						value={element.text}
+						onChange={(e) => handleTextChange(index, e.target.value)}
+						placeholder={`Enter ${element.type}`}
+						fullWidth
+						variant="outlined"
+						multiline={element.type === 'paragraph'}
+						sx={{
+							marginBottom: 1,
+							fontWeight: element.bold ? 'bold' : 'normal',
+							color: element.color,
+							fontSize: element.type === 'title' ? '2em' : '1.5em'
+						}}
+						inputProps={{
+							style: {
+								fontWeight: element.bold ? 'bold' : 'normal',
+								color: element.color,
+								fontSize: element.type === 'title' ? undefined : '0.9rem',
+								fontFamily: 'GT Planar',
+								letterSpacing: '-.3px'
+							}
+						}}
+					/>
+				);
+	
+			case 'image':
+				return (
+					<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+					{element.text && (
+						<img
+						src={element.text}
+						alt="Uploaded Preview"
+						style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }}
+						/>
+					)}
+					</Box>
+				);
+				
+			case 'alert':
+				return (
+					<AlertCategories
+						type={element.markdownType}
+						text={element.text}
+						onTextChange={(newText) => handleTextChange(index, newText)}
+						color={element.color}
+						title={element.title}
+						iconType={element.iconType}
+						className="markdown-elementtttt"
+					/>
+				);
+	
+			case 'codeBox':
+				return (
+					<TextField
+						multiline
+						minRows={4}
+						value={element.text}
+						onChange={(e) => handleTextChange(index, e.target.value)}
+						placeholder="Insert your code here..."
+						fullWidth
+						variant="outlined"
+						sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
+					/>
+				);
+	
+			case 'table':
+				return (
+					<TableContainer component={Paper}>
+					<Table>
+						<TableBody>
+						{(element.data || [[]]).map((row, rowIndex) => (
+							<TableRow key={rowIndex}>
+							{row.map((cell, colIndex) => (
+								<TableCell key={colIndex}>
+								<TextField
+									value={cell}
+									onChange={(e) => onUpdateCell(index, rowIndex, colIndex, e.target.value)}
+									inputProps={{
+									style: {
+										fontFamily: 'GT Planar',
+										letterSpacing: '-.3px'
+									}
+									}}
+								/>
+								</TableCell>
+							))}
+							</TableRow>
+						))}
+						</TableBody>
+					</Table>
+					</TableContainer>
+				);
+
+			case 'list':
+				return (
+					<List>
+					{(element.items || []).map((item, itemIndex) => (
+						<ListItem key={itemIndex}>
 							<TextField
-								value={cell}
-								onChange={(e) => onUpdateCell(index, rowIndex, colIndex, e.target.value)}
+								value={item}
+								onChange={(e) => onUpdateListItem(index, itemIndex, e.target.value)}
+								placeholder="Enter list item"
+								fullWidth
 								inputProps={{
 								style: {
-									fontFamily: 'GT Planar',
+									fontFamily: 'GT Planra',
 									letterSpacing: '-.3px'
 								}
 								}}
 							/>
-							</TableCell>
-						))}
-						</TableRow>
+							<Button onClick={() => onRemoveListItem(index, itemIndex)}>❌</Button>
+						</ListItem>
 					))}
-					</TableBody>
-				</Table>
-				</TableContainer>
-			);
-
-        case 'list':
-            return (
-                <List>
-                {(element.items || []).map((item, itemIndex) => (
-                    <ListItem key={itemIndex}>
-                        <TextField
-                            value={item}
-                            onChange={(e) => onUpdateListItem(index, itemIndex, e.target.value)}
-                            placeholder="Enter list item"
-                            fullWidth
-                            inputProps={{
-                            style: {
-                                fontFamily: 'GT Planra',
-                                letterSpacing: '-.3px'
-                            }
-                            }}
-                        />
-                        <Button onClick={() => onRemoveListItem(index, itemIndex)}>❌</Button>
-                    </ListItem>
-                ))}
-                </List>
-            );
-  
-        default:
-          	return <p>Unknown element type</p>;
-      }
+					</List>
+				);
+	
+			default:
+				return <p>Unknown element type</p>;
+		}
     };
 
     const getActionButtons = () => {
@@ -233,7 +261,7 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
 							<Select
 								labelId="markdown-type-label"
 								value={markdownType}
-								onChange={handleMarkdownTypeChange}
+								onChange={handleAlertTypeChange}
 								MenuProps={{
 									PaperProps: {
 										sx: {
@@ -247,6 +275,29 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
 										{type}
 									</MenuItem>
 								))}
+							</Select>
+						</FormControl>
+					</Box>
+				);
+
+			case 'codeBox':
+				return (
+					<Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+						<FormControl fullWidth style={{ marginTop: '18px' }}>
+							<InputLabel id="markdown-type-label" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }} >Code language</InputLabel>
+							<Select
+								labelId="markdown-type-label"
+								value={codeType || 'JS'}
+								onChange={handleCodeTypeChange}
+								MenuProps={{
+									PaperProps: {
+										sx: {
+											fontFamily: "GT Planar",
+										},
+									},
+								}}
+							>
+								{extensionFiles}
 							</Select>
 						</FormControl>
 					</Box>
