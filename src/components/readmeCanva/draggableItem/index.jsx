@@ -186,23 +186,29 @@ function DraggableItem ({ element, index, handleTextChange, setElements, onRemov
 			case 'list':
 				return (
 					<List>
-					{(element.items || []).map((item, itemIndex) => (
-						<ListItem key={itemIndex}>
-							<TextField
-								value={item}
-								onChange={(e) => onUpdateListItem(index, itemIndex, e.target.value)}
-								placeholder="Enter list item"
-								fullWidth
-								inputProps={{
-								style: {
-									fontFamily: 'GT Planra',
-									letterSpacing: '-.3px'
-								}
-								}}
-							/>
-							<Button onClick={() => onRemoveListItem(index, itemIndex)}>❌</Button>
-						</ListItem>
-					))}
+						{(element.items || []).map((item, itemIndex) => (
+							<ListItem key={itemIndex}>
+								<TextField
+									value={item}
+									onChange={(e) => onUpdateListItem(index, itemIndex, e.target.value)}
+									placeholder="Enter list item"
+									fullWidth
+									inputProps={{
+										style: {
+											fontFamily: 'GT Planra',
+											letterSpacing: '-.3px'
+										}
+									}}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') {
+											e.preventDefault();
+											onAddListItem(index);
+										}
+									}}
+								/>
+								<Button onClick={() => onRemoveListItem(index, itemIndex)}>❌</Button>
+							</ListItem>
+						))}
 					</List>
 				);
 	
