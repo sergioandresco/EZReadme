@@ -4,7 +4,6 @@ import { Toaster } from 'sonner';
 import '@/index.css';
 import { ReadmeProvider } from './context/saveElements';
 import { AlertProvider } from './context/alertContext';
-import { CodeProvider } from './context/codeLanguageContext';
 import App from '@/App.jsx';
 import Squares from '@/components/Squares/Squares.jsx';
 import { Signature } from '@/components/signature';
