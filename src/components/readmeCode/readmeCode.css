@@ -1,0 +1,7 @@
+.markdown-body table {
+    color: black;
+}
+
+.markdown-body table tr {
+    background-color: white !important;
+}

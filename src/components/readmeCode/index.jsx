@@ -1,11 +1,18 @@
-import { Grid, Paper, Box, Typography } from "@mui/material";
+import { useState } from "react";
+import { Grid, Paper, Box, Typography, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { MdContentCopy } from "react-icons/md";
 import { useReadme } from "../../context/saveElements";
 import { toast } from "sonner";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import 'github-markdown-css/github-markdown.css';
+import './readmeCode.css';
 
 function ReadmeCode() {
 
     const { elements } = useReadme();
+    const [viewMode, setViewMode] = useState("edit");
 
     const generateMarkdown = () => {
         return elements
@@ -20,7 +27,7 @@ function ReadmeCode() {
                     case "image":
                         return `![Insert the name of your image](Insert image URL here)`;
                     case "alert":
-                        return `> [!${el.title}]\n>\u00A0${el.text}`;
+                        return `> [!${el.title}]\n> \n> ${el.text}`;
                     case "codeBox":
                         return `\`\`\`${el.codeType}\n${el.text}\n\`\`\``;
                     case "table":
@@ -57,6 +64,8 @@ function ReadmeCode() {
             })
             .catch((err) => console.error("Failed to copy:", err));
     };
+
+    const markdownContent = generateMarkdown();
 
     return ( 
         <Grid
@@ -109,17 +118,46 @@ function ReadmeCode() {
                         }} 
                         />
                         <Typography 
-                        variant="h3" 
-                        sx={{ 
-                            fontFamily: 'Acorn', 
-                            fontSize: '20px', 
-                            color: 'white',
-                            fontWeight: 500,
-                            letterSpacing: '0.3px'
-                        }}
+                            variant="h3" 
+                            sx={{ 
+                                fontFamily: 'Acorn', 
+                                fontSize: '20px', 
+                                color: 'white',
+                                fontWeight: 500,
+                                letterSpacing: '0.3px'
+                            }}
                         >
                             Code on Markdown language
                         </Typography>
+                        <ToggleButtonGroup
+                            value={viewMode}
+                            exclusive
+                            onChange={(event, newMode) => {
+                                if (newMode !== null) setViewMode(newMode);
+                            }}
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                borderRadius: '8px',
+                                '& .MuiToggleButton-root': {
+                                    color: 'white',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    border: 'none',
+                                    textTransform: 'none',
+                                    '&.Mui-selected': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                        color: 'white',
+                                        fontWeight: '600',
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                    }
+                                }
+                            }}
+                        >
+                            <ToggleButton value="edit">Edit</ToggleButton>
+                            <ToggleButton value="preview">Preview</ToggleButton>
+                        </ToggleButtonGroup>
                     </Box>
                     <Box 
                         sx={{
@@ -145,23 +183,46 @@ function ReadmeCode() {
                     </Box>
                 </Box>
                 <Box
-                sx={{
-                    maxHeight: '500px',
-                    overflowY: 'auto',
-                    borderRadius: '8px',
-                    padding: 2,
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    overflowY: 'auto',
-                }}
+                    sx={{
+                        maxHeight: '500px',
+                        overflowY: 'auto',
+                        borderRadius: '8px',
+                        padding: 2,
+                        wordWrap: 'break-word',
+                        overflowWrap: 'break-word',
+                        overflowY: 'auto',
+                        backgroundColor: viewMode === "preview" ? "#ffffff" : "transparent",
+                        padding: viewMode === "preview" ? "20px" : "2px",
+                    }}
                 >
-                    <pre
-                        style={{ 
-                            whiteSpace: 'pre-wrap',
-                            wordBreak: 'break-word',
-                            overflowWrap: 'break-word'
-                        }}
-                    >{generateMarkdown()}</pre>
+                    {viewMode === "edit" ? (
+                        <pre
+                            style={{ 
+                                whiteSpace: 'pre-wrap',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
+                                margin: 0,
+                                fontFamily: 'monospace'
+                            }}
+                        >{markdownContent}</pre>
+                    ) : (
+                        <div 
+                            className="markdown-body" 
+                            style={{ 
+                                backgroundColor: '#ffffff',
+                                color: '#24292e',
+                                padding: '8px',
+                                borderRadius: '6px'
+                            }}
+                        >
+                            <ReactMarkdown 
+                                remarkPlugins={[remarkGfm]} 
+                                rehypePlugins={[rehypeRaw]}
+                            >
+                                {markdownContent}
+                            </ReactMarkdown>
+                        </div>
+                    )}
                 </Box>
             </Paper>
         </Grid>
