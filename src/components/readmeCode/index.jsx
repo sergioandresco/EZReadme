@@ -67,168 +67,178 @@ function ReadmeCode() {
 
     const markdownContent = generateMarkdown();
 
-    return ( 
-        <Grid
-            item
-            xs={12}
+    return (
+        <Paper 
+            elevation={3}
             sx={{
-                padding: '20px !important',
-                height: '585px',
+                padding: '0px',
+                height: "100%",
+                backgroundColor: '#FFFFFF',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'column',
             }}
+            id="readme-code-live"
         >
-            <Paper 
-                elevation={3}
+            <Box
                 sx={{
-                    padding: '0px',
-                    height: "100%",
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '12px',
+                    maxHeight: 'max-content',
                     display: 'flex',
-                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 2,
+                    background: 'linear-gradient(90deg, #2c3e50 0%, #4a6491 100%)',
+                    borderRadius: '12px 12px 0px 0px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    borderBottom: '1px solid rgba(255,255,255,0.1)',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    gap: 1.5,
                 }}
-                id="readme-code-live"
             >
-                <Box
-                    sx={{
-                        maxHeight: '50px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: 2,
-                        background: 'linear-gradient(90deg, #2c3e50 0%, #4a6491 100%)',
-                        borderRadius: '12px 12px 0px 0px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                        borderBottom: '1px solid rgba(255,255,255,0.1)'
-                    }}
-                    >
-                    <Box sx={{ 
+                <Box 
+                    sx={{ 
                         display: 'flex', 
                         alignItems: 'center',
-                        gap: 1.5
-                    }}>
-                        <Box 
-                        component="span" 
+                        gap: 1.5,
+                        flexDirection: { xs: 'column', md: 'row' },
+                    }}
+                >
+                    <Box
                         sx={{ 
-                            width: 18, 
-                            height: 18, 
-                            borderRadius: '50%', 
-                            background: '#4caf50', 
-                            display: 'inline-block',
-                            boxShadow: 'inset 0 0 2px rgba(0,0,0,0.2)' 
-                        }} 
+                            display: 'flex', 
+                            alignItems: 'center',
+                            gap: 1.5,
+                        }}
+                    >
+                        <Box 
+                            component="span" 
+                            sx={{ 
+                                width: 12, 
+                                height: 12, 
+                                borderRadius: '50%', 
+                                background: '#4caf50', 
+                                display: 'inline-block',
+                                boxShadow: 'inset 0 0 2px rgba(0,0,0,0.2)' 
+                            }} 
                         />
                         <Typography 
                             variant="h3" 
                             sx={{ 
                                 fontFamily: 'Acorn', 
-                                fontSize: '20px', 
+                                fontSize: '17px', 
                                 color: 'white',
                                 fontWeight: 500,
-                                letterSpacing: '0.3px'
+                                letterSpacing: '0.3px',
+                                width: '170px',
+                                textAlign: { xs: 'center', md: 'start' },
                             }}
                         >
                             Code on Markdown language
                         </Typography>
-                        <ToggleButtonGroup
-                            id="readme-code-toggle"
-                            value={viewMode}
-                            exclusive
-                            onChange={(event, newMode) => {
-                                if (newMode !== null) setViewMode(newMode);
-                            }}
-                            sx={{
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                borderRadius: '8px',
-                                '& .MuiToggleButton-root': {
-                                    color: 'white',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    border: 'none',
-                                    textTransform: 'none',
-                                    '&.Mui-selected': {
-                                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                                        color: 'white',
-                                        fontWeight: '600',
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                    }
-                                }
-                            }}
-                        >
-                            <ToggleButton id="code-toggle" value="edit">Code</ToggleButton>
-                            <ToggleButton id="preview-toggle" value="preview">Preview</ToggleButton>
-                        </ToggleButtonGroup>
                     </Box>
-                    <Box 
+                    <ToggleButtonGroup
+                        id="readme-code-toggle"
+                        value={viewMode}
+                        exclusive
+                        onChange={(event, newMode) => {
+                            if (newMode !== null) setViewMode(newMode);
+                        }}
                         sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '36px',
-                            height: '36px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             borderRadius: '8px',
-                            backgroundColor: 'rgba(255,255,255,0.1)',
-                            transition: 'all 0.2s ease',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.2)',
-                                transform: 'scale(1.05)'
+                            '& .MuiToggleButton-root': {
+                                color: 'white',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                border: 'none',
+                                textTransform: 'none',
+                                '&.Mui-selected': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                                    color: 'white',
+                                    fontWeight: '600',
+                                },
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                }
                             }
                         }}
-                        id="readme-code-copy"
                     >
-                        <MdContentCopy 
-                            style={{ width: '22px', height: '22px', cursor: 'pointer', color: 'white' }}
-                            onClick={handleCopy}
-                        />
-                    </Box>
+                        <ToggleButton id="code-toggle" value="edit">Code</ToggleButton>
+                        <ToggleButton id="preview-toggle" value="preview">Preview</ToggleButton>
+                    </ToggleButtonGroup>
                 </Box>
-                <Box
+                <Box 
                     sx={{
-                        maxHeight: '500px',
-                        overflowY: 'auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '36px',
+                        height: '36px',
                         borderRadius: '8px',
-                        padding: 2,
-                        wordWrap: 'break-word',
-                        overflowWrap: 'break-word',
-                        overflowY: 'auto',
-                        backgroundColor: viewMode === "preview" ? "#ffffff" : "transparent",
-                        padding: viewMode === "preview" ? "20px" : "2px",
+                        backgroundColor: 'rgba(255,255,255,0.1)',
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                            backgroundColor: 'rgba(255,255,255,0.2)',
+                            transform: 'scale(1.05)'
+                        }
                     }}
+                    id="readme-code-copy"
                 >
-                    {viewMode === "edit" ? (
-                        <pre
-                            style={{ 
-                                whiteSpace: 'pre-wrap',
-                                wordBreak: 'break-word',
-                                overflowWrap: 'break-word',
-                                margin: 0,
-                                fontFamily: 'monospace'
-                            }}
+                    <MdContentCopy 
+                        style={{ width: '22px', height: '22px', cursor: 'pointer', color: 'white' }}
+                        onClick={handleCopy}
+                    />
+                </Box>
+            </Box>
+            <Box
+                sx={{
+                    maxHeight: '500px',
+                    overflowY: 'auto',
+                    borderRadius: '8px',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    overflowY: 'auto',
+                    backgroundColor: viewMode === "preview" ? "#ffffff" : "transparent",
+                    padding: viewMode === "preview" ? "12px" : "12px",
+                }}
+            >
+                {viewMode === "edit" ? (
+                    <pre
+                        style={{ 
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
+                            margin: 0,
+                            fontFamily: 'monospace'
+                        }}
+                    >
+                        {markdownContent}
+                    </pre>
+                ) : (
+                    <div 
+                        className="markdown-body" 
+                        style={{ 
+                            backgroundColor: '#ffffff',
+                            color: '#24292e',
+                            padding: '8px',
+                            borderRadius: '6px',
+                            width: '100%',
+                            overflowX: 'auto',
+                            wordBreak: 'break-word',
+                            whiteSpace: 'normal',
+                            boxSizing: 'border-box',
+                        }}
+                    >
+                        <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]} 
+                            rehypePlugins={[rehypeRaw]}
                         >
                             {markdownContent}
-                        </pre>
-                    ) : (
-                        <div 
-                            className="markdown-body" 
-                            style={{ 
-                                backgroundColor: '#ffffff',
-                                color: '#24292e',
-                                padding: '8px',
-                                borderRadius: '6px'
-                            }}
-                        >
-                            <ReactMarkdown 
-                                remarkPlugins={[remarkGfm]} 
-                                rehypePlugins={[rehypeRaw]}
-                            >
-                                {markdownContent}
-                            </ReactMarkdown>
-                        </div>
-                    )}
-                </Box>
-            </Paper>
-        </Grid>
+                        </ReactMarkdown>
+                    </div>
+                )}
+            </Box>
+        </Paper>
     );
 }
 

@@ -192,64 +192,52 @@ function ReadmeCanva() {
     };
 
     return (
-        <Grid
-            item
-            xs={12}
-            sm={9}
-            md={9}
-            lg={9}
+        <Paper
+            elevation={3}
+            sx={{
+                height: '100%',
+                backgroundColor: '#FFFFFF',
+                borderRadius: '12px',
+                height: {xs: '100%', sm: '100%', md: '100%', lg: '100%'}
+            }}
+            id="readme-canvas"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            sx={{ 
-                padding: '20px !important',
-                height: {xs: '100%', sm: '585px', md: '585px', lg: '585px'}, 
-            }}
         >
-            <Paper
-                elevation={3}
-                sx={{
-                    height: '100%',
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '12px',
-                    height: {xs: '585px', sm: '100%', md: '100%', lg: '100%'}
-                }}
-                id="readme-canvas"
+            {/* Canvas with fixed height and scroll */}
+            <Box
+            sx={{
+                maxHeight: '500px',
+                overflowY: 'auto',
+                borderRadius: '8px',
+                padding: 2,
+            }}
             >
-                {/* Canvas with fixed height and scroll */}
-                <Box
-                sx={{
-                    maxHeight: '500px',
-                    overflowY: 'auto',
-                    borderRadius: '8px',
-                    padding: 2,
-                }}
-                >
-                    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                        <SortableContext items={elements.map((_, index) => index)} strategy={verticalListSortingStrategy}>
-                        {elements.map((el, index) => (
-                            <DraggableItem
-                                key={index}
-                                element={el}
-                                index={index}
-                                handleTextChange={handleTextChange}
-                                setElements={setElements}
-                                onRemove={removeElement}
-                                onLink={insertLink}
-                                onAddRow={addRow}
-                                onDeleteRow={deleteRow}
-                                onAddColumn={addColumn}
-                                onDeleteColumn={deleteColumn}
-                                onAddListItem={addListItem}
-                                onRemoveListItem={removeListItem}
-                                onUpdateCell={updateCell}
-                                onUpdateListItem={updateListItem}
-                            />
-                        ))}
-                        </SortableContext>
-                    </DndContext>
-                </Box>
-            </Paper>
-        </Grid>
+                <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                    <SortableContext items={elements.map((_, index) => index)} strategy={verticalListSortingStrategy}>
+                    {elements.map((el, index) => (
+                        <DraggableItem
+                            key={index}
+                            element={el}
+                            index={index}
+                            handleTextChange={handleTextChange}
+                            setElements={setElements}
+                            onRemove={removeElement}
+                            onLink={insertLink}
+                            onAddRow={addRow}
+                            onDeleteRow={deleteRow}
+                            onAddColumn={addColumn}
+                            onDeleteColumn={deleteColumn}
+                            onAddListItem={addListItem}
+                            onRemoveListItem={removeListItem}
+                            onUpdateCell={updateCell}
+                            onUpdateListItem={updateListItem}
+                        />
+                    ))}
+                    </SortableContext>
+                </DndContext>
+            </Box>
+        </Paper>
     );
 }
 
