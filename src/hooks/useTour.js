@@ -31,7 +31,28 @@ export function useTour() {
                         element: "#readme-code-live",
                         popover: {
                         title: "Readme Code Live",
-                        description: "Here you can see the code live preview of your Readme.",
+                        description: "Here you can see the live code preview and the visual preview of your README.",
+                        },
+                    },
+                    {
+                        element: "#readme-code-toggle",
+                        popover: {
+                        title: "Readme Code Options",
+                        description: "Here you can choose between Edit and Preview mode.",
+                        },
+                    },
+                    {
+                        element: "#code-toggle",
+                        popover: {
+                        title: "Code Option",
+                        description: "Here you can see the code of your Readme.",
+                        },
+                    },
+                    {
+                        element: "#preview-toggle",
+                        popover: {
+                        title: "Preview Option",
+                        description: "Here you can see the preview of your Readme.",
                         },
                     },
                     {
