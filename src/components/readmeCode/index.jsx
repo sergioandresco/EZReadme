@@ -130,6 +130,7 @@ function ReadmeCode() {
                             Code on Markdown language
                         </Typography>
                         <ToggleButtonGroup
+                            id="readme-code-toggle"
                             value={viewMode}
                             exclusive
                             onChange={(event, newMode) => {
@@ -155,8 +156,8 @@ function ReadmeCode() {
                                 }
                             }}
                         >
-                            <ToggleButton value="edit">Edit</ToggleButton>
-                            <ToggleButton value="preview">Preview</ToggleButton>
+                            <ToggleButton id="code-toggle" value="edit">Code</ToggleButton>
+                            <ToggleButton id="preview-toggle" value="preview">Preview</ToggleButton>
                         </ToggleButtonGroup>
                     </Box>
                     <Box 
@@ -204,7 +205,9 @@ function ReadmeCode() {
                                 margin: 0,
                                 fontFamily: 'monospace'
                             }}
-                        >{markdownContent}</pre>
+                        >
+                            {markdownContent}
+                        </pre>
                     ) : (
                         <div 
                             className="markdown-body" 
