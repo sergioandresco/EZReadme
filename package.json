@@ -20,9 +20,13 @@
     "@formkit/drag-and-drop": "^0.3.3",
     "@mui/material": "^6.4.3",
     "driver.js": "^1.3.5",
+    "github-markdown-css": "^5.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
+    "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.1"
   },
   "devDependencies": {

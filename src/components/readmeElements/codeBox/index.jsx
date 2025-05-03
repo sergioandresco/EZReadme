@@ -91,7 +91,7 @@ function CodeBox({ codeType, setCodeType }) {
                     <Typography variant="h5" sx={{ fontFamily: 'Acorn' }}>{card.title}</Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }}>{card.description}</Typography>
                     <FormControl fullWidth style={{ marginTop: '18px' }}>
-                        <InputLabel id="markdown-type-label" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }}>Markdown type</InputLabel>
+                        <InputLabel id="markdown-type-label" sx={{ fontFamily: 'GT Planar', letterSpacing: '-.3px' }}>Code language</InputLabel>
                         <Select
                             labelId="markdown-type-label"
                             value={codeType || 'JS'}

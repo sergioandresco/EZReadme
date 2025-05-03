@@ -7,21 +7,24 @@ function CreationReadmeLayout() {
     return ( 
         <Grid
             container
-            spacing={3} 
             sx={{ 
                 padding: '0px', 
                 margin: '0px',
+                justifyContent: { xs: 'center', md: 'unset' },
             }}
             className="creationReadmeLayout"
         >
-            <Box 
-                sx={{ 
-                    display: {xs: 'flex', md: 'contents', lg: 'contents'}, 
-                    flexDirection: {xs: 'column', sm: 'row', md: 'row', lg: 'row'} }}>
+            <Grid item xs={10} md={3} sx={{ height: '585px', padding: { xs: '24px 0px 0px 0px', md: 3 } }}>
                 <ContainerElements />
+            </Grid>
+
+            <Grid item xs={10} md={5} sx={{ height: '585px', padding: { xs: '24px 0px 0px 0px', md: 3 } }}>
                 <ReadmeCanva />
-            </Box>
-            <ReadmeCode />
+            </Grid>
+
+            <Grid item xs={10} md={4} sx={{ height: '585px', padding: { xs: '24px 0px 0px 0px', md: 3 } }}>
+                <ReadmeCode />
+            </Grid>
         </Grid>
     );
 }
