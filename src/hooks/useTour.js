@@ -62,6 +62,13 @@ export function useTour() {
                         description: "Here you can copy the markdown code of your Readme.",
                         },
                     },
+                    {
+                        element: "#download-readme",
+                        popover: {
+                        title: "Download Readme",
+                        description: "Here you can download your Readme file generated.",
+                        },
+                    },
                 ],
             });
 
